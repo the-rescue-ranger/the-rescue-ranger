@@ -1,0 +1,10 @@
+NodeMCU ESP8266:
+- D1, D2: GSM module (RX, TX)
+- D3, D4: GPS module (RX, TX)
+- D5 (SCL), D6 (SDA): MAX30105 sensor
+
+Power connections:
+- 3.3V to MAX30105 VIN
+- 5V to GPS VIN
+- 4V to GSM VIN
+- Common ground for all components
