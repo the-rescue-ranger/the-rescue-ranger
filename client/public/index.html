@@ -1,26 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/logo.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.ico" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-   
-    <title>Rescue Ranger</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rescue Ranger - Health Monitoring System</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    
+    <!-- React and React DOM -->
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    
+    <!-- React Router -->
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/6.22.1/react-router-dom.production.min.js"></script>
+    
+    <!-- Recharts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.12.0/Recharts.min.js"></script>
+    
+    <!-- Axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
 
-  </body>
+    <!-- Custom Styles -->
+    <style>
+        /* Animation classes */
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Loading spinner animation */
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="Rescue Ranger - Real-time health monitoring system for tracking vital signs and location data">
+    <meta name="keywords" content="health monitoring, GPS tracking, emergency response, vital signs, SpO2, heart rate">
+    <meta name="author" content="Rescue Ranger Team">
+    
+    <!-- Open Graph tags for social sharing -->
+    <meta property="og:title" content="Rescue Ranger - Health Monitoring System">
+    <meta property="og:description" content="Real-time health monitoring system for tracking vital signs and location data">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rescue-ranger.example.com">
+</head>
+<body>
+    <div id="root"></div>
+    
+    <!-- Error boundary for React -->
+    <div id="error-container" style="display: none; padding: 20px; margin: 20px; background-color: #fee2e2; border-radius: 8px;">
+        <h2 style="color: #dc2626; font-weight: bold;">Something went wrong</h2>
+        <p id="error-message" style="color: #7f1d1d;"></p>
+    </div>
+
+    <!-- Loading indicator -->
+    <div id="loading" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    </div>
+
+    <!-- Main application script -->
+    <script type="module">
+        // Show loading indicator
+        document.getElementById('loading').style.display = 'block';
+
+        // Initialize React app
+        try {
+            const container = document.getElementById('root');
+            const root = ReactDOM.createRoot(container);
+            root.render(React.createElement(App));
+        } catch (error) {
+            // Show error boundary
+            document.getElementById('error-container').style.display = 'block';
+            document.getElementById('error-message').textContent = error.message;
+            console.error('Application failed to start:', error);
+        } finally {
+            // Hide loading indicator
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Service Worker registration for PWA support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => console.log('ServiceWorker registration successful'))
+                    .catch(err => console.log('ServiceWorker registration failed:', err));
+            });
+        }
+    </script>
+</body>
 </html>
